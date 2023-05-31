@@ -5,6 +5,8 @@ var config = builder.Configuration;
 var services = builder.Services;
 
 services.AddDbContext<DemoContext>();
+services.AddCors();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
