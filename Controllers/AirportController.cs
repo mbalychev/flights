@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using flights.models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-//using flights.Models;
 
 namespace flights.Controllers
 {
@@ -32,9 +31,7 @@ namespace flights.Controllers
         public async Task<ActionResult<IEnumerable<Airport>>> GetTModels(Pagination? pagination)
         {
             if (!CheckPagination(pagination))
-                return BadRequest(new ErrorView("ошибка", "ошибка пагинации"));
-
-
+                return BadRequest(new ErrorView("ошибка", "не верная модель пагинации"));
 
             if (pagination is null)
                 pagination = new Pagination();
