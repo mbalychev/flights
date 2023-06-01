@@ -17,6 +17,6 @@ public class Pagination
     ///общее кол-во позиций
     /// </summary>
     /// <value></value>
-    public int total { get; set; } = 0;
+    public int Total { get; set; } = 0;
 
 }

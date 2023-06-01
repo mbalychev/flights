@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using flights.Extensions;
 using flights.models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace flights.Controllers
 {
     /// <summary>
@@ -30,8 +32,8 @@ namespace flights.Controllers
         [HttpPost("read")]
         public async Task<ActionResult<IEnumerable<Airport>>> GetTModels(Pagination? pagination)
         {
-            if (!CheckPagination(pagination))
-                return BadRequest(new ErrorView("ошибка", "не верная модель пагинации"));
+            if (!pagination.CheckPagination())
+                return BadRequest(PaginationsExtensions.BadPaginationMessage());
 
             if (pagination is null)
                 pagination = new Pagination();
@@ -41,27 +43,13 @@ namespace flights.Controllers
                 .Take(pagination.OnPage)
                 .ToListAsync();
 
-            pagination.total = await _context.Airports.CountAsync();
+            pagination.Total = await _context.Airports.CountAsync();
 
             AirportView model = new AirportView(airports, pagination);
 
-            return Ok(model);
+            return Ok(JsonSerializer.Serialize(model));
         }
 
-        /// <summary>
-        /// проверка модели пагинации на корректность
-        /// </summary>
-        /// <param name="pagination"></param>
-        /// <returns></returns>
-        private bool CheckPagination(Pagination? pagination)
-        {
-
-            if (pagination is null) return true;
-
-            if (pagination.OnPage <= 0 || pagination.Page <= 0) return false;
-
-            return true;
-        }
 
         /// <summary>
         /// сведения о аэропорте
@@ -76,7 +64,7 @@ namespace flights.Controllers
             if (model is null)
                 return NotFound(new ErrorView("не найдено", id.ToString()));
 
-            return Ok(model);
+            return Ok(JsonSerializer.Serialize(model));
         }
 
         // [HttpPost("")]
