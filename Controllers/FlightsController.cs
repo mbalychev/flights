@@ -41,7 +41,7 @@ namespace flights.Controllers
         /// список полетов
         /// </summary>
         /// <returns></returns>
-        [HttpGet("")]
+        [HttpPost("")]
         public async Task<ActionResult<IEnumerable<Flight>>> GetTModels(Pagination? pagination)
         {
             if (!pagination.CheckPagination())
