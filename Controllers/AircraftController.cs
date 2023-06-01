@@ -31,9 +31,15 @@ namespace flights.Controllers
             _context = context;
         }
 
-
-        [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Aircraft>>> GetTModels(Pagination? pagination)
+        /// <summary>
+        /// список воздушных судов
+        /// </summary>
+        /// <param name="pagination">пагинация</param>
+        /// <param name="minRange">мин радиус полета</param>
+        /// <param name="maxRange">макс радиус полета</param>
+        /// <returns></returns>
+        [HttpPost("")]
+        public async Task<ActionResult<IEnumerable<Aircraft>>> GetTModels(Pagination? pagination, int? minRange, int? maxRange)
         {
             if (!pagination.CheckPagination())
                 return BadRequest(PaginationsExtensions.BadPaginationMessage());
@@ -41,8 +47,13 @@ namespace flights.Controllers
             if (pagination is null)
                 pagination = new Pagination();
 
+            //если значения пустые - ставим по умолчнию
+            minRange = (minRange is null) ? 0 : minRange;
+            maxRange = (maxRange is null) ? await _context.Aircrafts.Select(x => x.Range).MaxAsync() : maxRange;
+
             ICollection<Aircraft> aircrafts = await _context.Aircrafts
-            .OrderBy(x => x.Range)
+            .OrderBy(x => x.AircraftCode)
+            .Where(x => x.Range >= minRange && x.Range <= maxRange)
             .Skip(pagination.OnPage * (pagination.Page - 1))
             .Take(pagination.OnPage)
             .ToListAsync();
