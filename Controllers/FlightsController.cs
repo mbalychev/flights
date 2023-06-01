@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using flights.models;
 using Microsoft.AspNetCore.Mvc;
 using flights.Extensions;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using flights.ViewModels;
 
