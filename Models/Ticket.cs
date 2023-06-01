@@ -32,8 +32,15 @@ public partial class Ticket
     /// Passenger contact information
     /// </summary>
     public string? ContactData { get; set; }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <value></value>
     public virtual Booking BookRefNavigation { get; set; } = null!;
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TicketFlight"></typeparam>
+    /// <returns></returns>
     public virtual ICollection<TicketFlight> TicketFlights { get; set; } = new List<TicketFlight>();
 }

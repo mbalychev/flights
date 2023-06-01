@@ -4,10 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using flights.models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 //using flights.Models;
 
 namespace flights.Controllers
 {
+    /// <summary>
+    /// Аэропорты
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AirportController : ControllerBase
@@ -19,22 +23,64 @@ namespace flights.Controllers
             _context = context;
         }
 
-        [HttpGet("")]
-        public async Task<ActionResult<IEnumerable<Airport>>> GetTModels()
+        /// <summary>
+        /// список аэропортов
+        /// </summary>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        [HttpPost("read")]
+        public async Task<ActionResult<IEnumerable<Airport>>> GetTModels(Pagination? pagination)
         {
-            // TODO: Your code here
+            if (!CheckPagination(pagination))
+                return BadRequest(new ErrorView("ошибка", "ошибка пагинации"));
 
-            return Ok(_context.Airports.Take(10));
+
+
+            if (pagination is null)
+                pagination = new Pagination();
+
+            ICollection<Airport> airports = await _context.Airports
+                .Skip(pagination.OnPage * (pagination.Page - 1))
+                .Take(pagination.OnPage)
+                .ToListAsync();
+
+            pagination.total = await _context.Airports.CountAsync();
+
+            AirportView model = new AirportView(airports, pagination);
+
+            return Ok(model);
         }
 
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<TModel>> GetTModelById(int id)
-        // {
-        //     // TODO: Your code here
-        //     await Task.Yield();
+        /// <summary>
+        /// проверка модели пагинации на корректность
+        /// </summary>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        private bool CheckPagination(Pagination? pagination)
+        {
 
-        //     return null;
-        // }
+            if (pagination is null) return true;
+
+            if (pagination.OnPage <= 0 || pagination.Page <= 0) return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// сведения о аэропорте
+        /// </summary>
+        /// <param name="id">id аэропорта</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Airport>> GetTModelById(int id)
+        {
+            Airport? model = await _context.Airports.FindAsync(id);
+
+            if (model is null)
+                return NotFound(new ErrorView("не найдено", id.ToString()));
+
+            return Ok(model);
+        }
 
         // [HttpPost("")]
         // public async Task<ActionResult<TModel>> PostTModel(TModel model)
