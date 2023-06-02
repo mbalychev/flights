@@ -1,4 +1,5 @@
 using flights.models;
+using flights.Repository;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ services.AddCors();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+services.AddTransient<FlightRepository>();
 
 services.AddSwaggerGen(opt =>
 {

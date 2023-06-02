@@ -4,6 +4,8 @@ using flights.Extensions;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using flights.ViewModels;
+using flights.Repository;
+using Newtonsoft.Json;
 
 /// <summary>
 /// управление/информация полетам
@@ -19,59 +21,36 @@ namespace flights.Controllers
     public class FlightsController : ControllerBase
     {
         /// <summary>
-        /// контекст БД
+        /// репозиторий полетов
         /// </summary>
-        DemoContext _context;
+        FlightRepository repository;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="context"></param>
-        public FlightsController(DemoContext context)
+        /// <param name="repository"></param>
+        public FlightsController(FlightRepository repository)
         {
-            _context = context;
+            this.repository = repository;
         }
 
         /// <summary>
         /// список полетов (пагинация, фильтры)
         /// </summary>
-        /// <param name="pagination">пагинация</param>
-        /// <param name="arrival">место прибытия</param>
-        /// <param name="status">статус рейса</param>
-        /// <param name="scheduledArriveMin">мин время прибытия</param>
-        /// <param name="scheduledArriveMax">макс время прибытия</param>
+        /// <param name="filter">фильтраци</param>
         /// <returns></returns>
         [HttpPost("")]
-        public async Task<ActionResult<IEnumerable<Flight>>> GetTModels(
-            Pagination? pagination,
-            string? arrival,
-            string? status,
-            DateTime? scheduledArriveMin,
-            DateTime? scheduledArriveMax)
+        public async Task<IActionResult> GetTModels(FlightFilter? filter)
         {
-            if (!pagination.CheckPagination())
+
+            if (filter?.Pagination is not null && !filter.Pagination.CheckPagination())
                 return NotFound(PaginationsExtensions.BadPaginationMessage());
 
-            if (pagination is null)
-                pagination = new Pagination();
+            filter = (filter is null) ? new FlightFilter() : filter;
 
-            //значения по умолчанию
-            scheduledArriveMin = (scheduledArriveMin is null) ? await _context.Flights.Select(x => x.ScheduledArrival).MinAsync() : scheduledArriveMin;
-            scheduledArriveMax = (scheduledArriveMax is null) ? await _context.Flights.Select(x => x.ScheduledArrival).MaxAsync() : scheduledArriveMax;
+            (ICollection<Flight> flights, FlightFilter filterUpdate) = await repository.GetFlightsAsync(filter);
 
-            ICollection<Flight> flights = await _context.Flights
-                .OrderBy(x => x.FlightId)
-                .Where(x => x.ScheduledArrival >= scheduledArriveMin &&
-                        x.ScheduledArrival <= scheduledArriveMax &&
-                        x.ArrivalAirport == arrival &&
-                        x.Status == status)
-                .Skip(pagination.OnPage * (pagination.Page - 1))
-                .Take(pagination.OnPage)
-                .ToListAsync();
-
-            pagination.Total = flights.Count();
-
-            FlightsView model = new FlightsView(flights, pagination);
+            FlightsView model = new FlightsView(flights, filterUpdate);
 
             return Ok(model);
         }
@@ -84,15 +63,14 @@ namespace flights.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Flight>> GetTModelById(int id)
         {
-            Flight? flight = await _context.Flights.FindAsync(id);
+            Flight? flight = await repository.GetFlightAsync(id);
 
             if (flight is null)
                 return NotFound(new ErrorView("не найдено", id.ToString()));
 
-            return Ok(JsonSerializer.Serialize(flight));
+            return Ok((flight));
         }
 
-        // [HttpPost("")]
         // public ActionResult<TModel> PostTModel(TModel model)
         // {
         //     return null;

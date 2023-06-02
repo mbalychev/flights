@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using flights.models;
 
 namespace flights.ViewModels
@@ -6,17 +7,16 @@ namespace flights.ViewModels
     /// <summary>
     /// модель для вывода данных полета, с пагинацией
     /// </summary>
-    public class FlightsView
+    public class FlightsView : Pagination
     {
         /// <summary>
         /// конструктор
         /// </summary>
         /// <param name="flights"></param>
-        /// <param name="pagination"></param>
-        public FlightsView(ICollection<Flight> flights, Pagination pagination)
+        /// <param name="filter"></param>
+        public FlightsView(ICollection<Flight> flights, FlightFilter filter) : base(filter.Pagination.Page, filter.Pagination.OnPage, filter.Pagination.Total)
         {
             this.Flights = flights;
-            this.Pagination = pagination;
         }
 
         /// <summary>
@@ -24,11 +24,7 @@ namespace flights.ViewModels
         /// </summary>
         /// <typeparam name="Flight"></typeparam>
         /// <returns></returns>
-        ICollection<Flight> Flights { get; set; } = new List<Flight>();
-        /// <summary>
-        /// пагинация списка
-        /// </summary>
-        /// <returns></returns>
-        Pagination Pagination { get; set; } = new Pagination();
+        [JsonPropertyName("flights")]
+        public ICollection<Flight> Flights { get; set; } = new List<Flight>();
     }
 }

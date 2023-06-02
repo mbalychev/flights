@@ -4,6 +4,26 @@
 public class Pagination
 {
     /// <summary>
+    /// без параметров
+    /// </summary>
+    public Pagination()
+    {
+    }
+
+    /// <summary>
+    /// конструктор с параметрами
+    /// </summary>
+    /// <param name="page">тек стр</param>
+    /// <param name="onPage">на стрнице</param>
+    /// <param name="total">всего позиций</param>
+    public Pagination(short page, short onPage, int total)
+    {
+        Page = page;
+        OnPage = onPage;
+        Total = total;
+    }
+
+    /// <summary>
     ///тек страница
     /// </summary>
     /// <value></value>
