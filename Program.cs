@@ -6,11 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var services = builder.Services;
 
+builder.WebHost.UseUrls(urls: "http://0.0.0.0:3002");
 services.AddDbContext<DemoContext>();
 services.AddCors();
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+services.AddControllers();
+services.AddEndpointsApiExplorer();
 services.AddTransient<FlightRepository>();
 
 services.AddSwaggerGen(opt =>
