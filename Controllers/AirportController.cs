@@ -42,7 +42,7 @@ namespace flights.Controllers
 
             AirportView model = new AirportView(airports, pagination);
 
-            return Ok(JsonSerializer.Serialize(model));
+            return Ok(model);
         }
 
 
@@ -59,7 +59,7 @@ namespace flights.Controllers
             if (model is null)
                 return NotFound(new ErrorView("не найдено", id.ToString()));
 
-            return Ok(JsonSerializer.Serialize(model));
+            return Ok(model);
         }
 
         // [HttpPost("")]
