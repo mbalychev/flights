@@ -58,11 +58,5 @@ public partial class Flight
     /// </summary>
     public DateTime? ActualArrival { get; set; }
 
-    public virtual AircraftsDatum AircraftCodeNavigation { get; set; } = null!;
-
-    public virtual AirportsDatum ArrivalAirportNavigation { get; set; } = null!;
-
-    public virtual AirportsDatum DepartureAirportNavigation { get; set; } = null!;
-
-    public virtual ICollection<TicketFlight> TicketFlights { get; set; } = new List<TicketFlight>();
+    // public virtual AircraftsDa tion<TicketFlight> TicketFlights { get; set; } = new List<TicketFlight>();
 }

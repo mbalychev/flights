@@ -1,5 +1,6 @@
 using flights.models;
 using flights.Repository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,9 +8,10 @@ var config = builder.Configuration;
 var services = builder.Services;
 
 builder.WebHost.UseUrls(urls: "http://0.0.0.0:3002");
-services.AddDbContext<DemoContext>();
-services.AddCors();
 
+services.AddCors();
+string? connection = builder.Configuration.GetConnectionString("DataConnection");
+services.AddDbContext<DemoContext>(opt => opt.UseNpgsql(connection));
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddTransient<FlightRepository>();
@@ -30,7 +32,7 @@ services.AddSwaggerGen(opt =>
 });
 
 var app = builder.Build();
-
+// app.UseCors(opt => opt.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -38,9 +40,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
-app.UseAuthorization();
+// app.UseAuthorization();
 
 app.MapControllers();
 

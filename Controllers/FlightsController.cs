@@ -40,7 +40,7 @@ namespace flights.Controllers
         /// <param name="filter">фильтраци</param>
         /// <returns></returns>
         [HttpPost("")]
-        public async Task<IActionResult> GetTModels(FlightFilter? filter)
+        public async Task<ActionResult<FlightsView>> GetTModels(FlightFilter? filter)
         {
 
             if (filter?.Pagination is not null && !filter.Pagination.CheckPagination())
