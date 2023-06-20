@@ -10,18 +10,18 @@ using Microsoft.EntityFrameworkCore;
 using flights.ViewModels;
 //using flights.Models;
 
-/// <summary>
-/// информация/упралвение воздушными судами
-/// </summary>
 namespace flights.Controllers
 {
+    /// <summary>
+    /// информация/упралвение воздушными судами
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    /// <summary>
-    ///информация/упралвение воздушными судами
-    /// </summary>
     public class AircraftController : ControllerBase
     {
+        /// <summary>
+        ///  demo context
+        /// </summary>
         public DemoContext _context;
         /// <summary>
         /// инициализация 

@@ -40,7 +40,6 @@ public partial class Ticket
     /// <summary>
     /// 
     /// </summary>
-    /// <typeparam name="TicketFlight"></typeparam>
     /// <returns></returns>
     public virtual ICollection<TicketFlight> TicketFlights { get; set; } = new List<TicketFlight>();
 }

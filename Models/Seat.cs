@@ -23,5 +23,9 @@ public partial class Seat
     /// </summary>
     public string FareConditions { get; set; } = null!;
 
+    /// <summary>
+    /// возд судно
+    /// </summary>
+    /// <value></value>
     public virtual AircraftsDatum AircraftCodeNavigation { get; set; } = null!;
 }

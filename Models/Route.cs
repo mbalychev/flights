@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace flights.models;
 
+/// <summary>
+/// маршрут
+/// </summary>
 public partial class Route
 {
     /// <summary>

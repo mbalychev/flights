@@ -28,9 +28,21 @@ public partial class TicketFlight
     /// </summary>
     public decimal Amount { get; set; }
 
+    /// <summary>
+    /// посадочный талон
+    /// </summary>
+    /// <value></value>
     public virtual BoardingPass? BoardingPass { get; set; }
 
+    /// <summary>
+    /// полет
+    /// </summary>
+    /// <value></value>
     public virtual Flight Flight { get; set; } = null!;
 
+    /// <summary>
+    /// билет навигация
+    /// </summary>
+    /// <value></value>
     public virtual Ticket TicketNoNavigation { get; set; } = null!;
 }

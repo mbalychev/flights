@@ -14,6 +14,10 @@ namespace flights.Controllers
     {
         DemoContext _context;
 
+        /// <summary>
+        /// demo context
+        /// </summary>
+        /// <param name="context"></param>
         public AirportController(DemoContext context)
         {
             _context = context;

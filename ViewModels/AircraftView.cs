@@ -7,6 +7,11 @@ namespace flights.ViewModels
     /// </summary>
     public class AircraftView
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="aircrafts"></param>
+        /// <param name="paginations"></param>
         public AircraftView(ICollection<Aircraft> aircrafts, Pagination paginations)
         {
             this.Aircrafts = aircrafts;
@@ -16,7 +21,6 @@ namespace flights.ViewModels
         /// <summary>
         /// список моделей возд судов
         /// </summary>
-        /// <typeparam name="Aircraft"></typeparam>
         /// <returns></returns>
         public ICollection<Aircraft> Aircrafts { get; set; } = new List<Aircraft>();
         /// <summary>

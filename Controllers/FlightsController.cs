@@ -7,9 +7,6 @@ using flights.ViewModels;
 using flights.Repository;
 using Newtonsoft.Json;
 
-/// <summary>
-/// управление/информация полетам
-/// </summary>
 namespace flights.Controllers
 {
 

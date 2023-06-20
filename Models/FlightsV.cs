@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace flights.models;
 
+/// <summary>
+/// 
+/// </summary>
 public partial class FlightsV
 {
     /// <summary>

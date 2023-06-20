@@ -23,5 +23,9 @@ public partial class Booking
     /// </summary>
     public decimal TotalAmount { get; set; }
 
+    /// <summary>
+    /// билеты
+    /// </summary>
+    /// <returns></returns>
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

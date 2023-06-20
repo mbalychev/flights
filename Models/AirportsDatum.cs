@@ -34,7 +34,14 @@ public partial class AirportsDatum
     /// </summary>
     public string Timezone { get; set; } = null!;
 
+    /// <summary>
+    /// полеты - как место прибытия
+    /// </summary>
+    /// <returns></returns>
     public virtual ICollection<Flight> FlightArrivalAirportNavigations { get; set; } = new List<Flight>();
-
+    /// <summary>
+    /// полеты - как место отбытия
+    /// </summary>
+    /// <returns></returns>
     public virtual ICollection<Flight> FlightDepartureAirportNavigations { get; set; } = new List<Flight>();
 }

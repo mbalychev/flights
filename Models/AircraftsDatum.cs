@@ -23,7 +23,15 @@ public partial class AircraftsDatum
     /// </summary>
     public int Range { get; set; }
 
+    /// <summary>
+    /// полеты
+    /// </summary>
+    /// <returns></returns>
     public virtual ICollection<Flight> Flights { get; set; } = new List<Flight>();
 
+    /// <summary>
+    /// места
+    /// </summary>
+    /// <returns></returns>
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
 }

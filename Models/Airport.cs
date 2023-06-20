@@ -4,6 +4,9 @@ using NpgsqlTypes;
 
 namespace flights.models;
 
+/// <summary>
+/// аэропорт
+/// </summary>
 public partial class Airport
 {
     /// <summary>

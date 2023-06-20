@@ -22,7 +22,6 @@ namespace flights.ViewModels
         /// <summary>
         /// список полетов
         /// </summary>
-        /// <typeparam name="Flight"></typeparam>
         /// <returns></returns>
         [JsonPropertyName("flights")]
         public ICollection<Flight> Flights { get; set; } = new List<Flight>();

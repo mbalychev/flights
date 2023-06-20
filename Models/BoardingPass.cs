@@ -28,5 +28,9 @@ public partial class BoardingPass
     /// </summary>
     public string SeatNo { get; set; } = null!;
 
+    /// <summary>
+    /// билеты
+    /// </summary>
+    /// <value></value>
     public virtual TicketFlight TicketFlight { get; set; } = null!;
 }
