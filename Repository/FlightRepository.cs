@@ -2,7 +2,7 @@ using flights.models;
 using flights.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace flights.Repository
+namespace Repository
 {
     /// <summary>
     /// репозиторий полетов

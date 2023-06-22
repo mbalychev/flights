@@ -4,7 +4,7 @@ using flights.Extensions;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using flights.ViewModels;
-using flights.Repository;
+using Repository;
 using Newtonsoft.Json;
 
 namespace flights.Controllers
