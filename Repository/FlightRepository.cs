@@ -1,7 +1,7 @@
 using flights.models;
 using flights.ViewModels;
 using Microsoft.EntityFrameworkCore;
-
+using flights.Filter;
 namespace Repository
 {
     /// <summary>
@@ -34,20 +34,24 @@ namespace Repository
             List<Flight> flights = await context.Flights
                 .AsNoTracking()
                 .OrderBy(x => x.FlightId)
-                .Where(x => x.ScheduledArrival >= filter.ScheduledArriveMin &&
-                        x.ScheduledArrival <= filter.ScheduledArriveMax &&
-                        x.ArrivalAirport == filter.Arrival &&
-                        x.Status == filter.Status)
+                .Arrival(filter.Arrival)
+                .Status(filter.Status)
+                .ArriveMin(filter.ScheduledArriveMin)
+                .ArriveMax(filter.ScheduledArriveMax)
+                // .Where(x => x.ScheduledArrival >= filter.ScheduledArriveMin &&
+                //         x.ScheduledArrival <= filter.ScheduledArriveMax &&
+                //         x.ArrivalAirport == filter.Arrival &&
+                //         x.Status == filter.Status)
                 .Skip(filter.Pagination.OnPage * (filter.Pagination.Page - 1))
                 .Take(filter.Pagination.OnPage)
                 .ToListAsync();
 
 
             filter.Pagination.Total = await context.Flights
-                .Where(x => x.ScheduledArrival >= filter.ScheduledArriveMin &&
-                        x.ScheduledArrival <= filter.ScheduledArriveMax &&
-                        x.ArrivalAirport == filter.Arrival &&
-                        x.Status == filter.Status)
+               .Arrival(filter.Arrival)
+                .Status(filter.Status)
+                .ArriveMin(filter.ScheduledArriveMin)
+                .ArriveMax(filter.ScheduledArriveMax)
                 .CountAsync();
 
             return (flights, filter);

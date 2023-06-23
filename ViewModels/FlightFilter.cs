@@ -54,11 +54,11 @@ namespace flights.ViewModels
         /// мин время прибытия
         /// </summary>
         /// <value></value>
-        public DateTime? ScheduledArriveMin { get; set; } = DateTime.UtcNow;
+        public DateTime? ScheduledArriveMin { get; set; }
         /// <summary>
         /// макс время прибытия
         /// </summary>
         /// <value></value>
-        public DateTime? ScheduledArriveMax { get; set; } = DateTime.UtcNow;
+        public DateTime? ScheduledArriveMax { get; set; }
     }
 }
