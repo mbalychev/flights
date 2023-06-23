@@ -37,5 +37,16 @@ namespace Repository
             return airports;
         }
 
+        /// <summary>
+        /// для справочников возд судов
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ICollection<TAircrafts>> GetAircrafts()
+        {
+            ICollection<TAircrafts> models = await context.Aircrafts.Select(x => new TAircrafts { Code = x.AircraftCode, Model = x.Model }).ToListAsync();
+
+            return models;
+        }
+
     }
 }

@@ -36,12 +36,24 @@ namespace flights.Controllers
         /// справочник аэропортов
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Airports")]
-        public async Task<ActionResult<ICollection<TAirport>>> GetTModels()
+        [HttpGet("airports")]
+        public async Task<ActionResult<ICollection<TAirport>>> Airports()
         {
             ICollection<TAirport> airports = await repository.GetAirports();
 
             return Ok(airports);
+        }
+
+        /// <summary>
+        /// справочник возд судов
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("aircrafts")]
+        public async Task<ActionResult<ICollection<TAircrafts>>> Aircrafts()
+        {
+            ICollection<TAircrafts> models = await repository.GetAircrafts();
+
+            return Ok(models);
         }
 
 
