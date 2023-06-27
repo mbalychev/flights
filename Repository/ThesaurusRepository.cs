@@ -48,5 +48,23 @@ namespace Repository
             return models;
         }
 
+        /// <summary>
+        /// поиск по номеру рейса
+        /// </summary>
+        /// <param name="contains"></param>
+        /// <returns></returns>
+        public async Task<ICollection<string>> FindFlightsNum(string contains)
+        {
+            ICollection<string> numbers = await context.Flights
+            .Where(x => x.FlightNo
+            .Contains(contains.ToUpper()))
+            .Select(x => x.FlightNo)
+            .Distinct()
+            .Take(10)
+            .ToListAsync();
+
+            return numbers;
+        }
+
     }
 }

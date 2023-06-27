@@ -56,6 +56,19 @@ namespace flights.Controllers
             return Ok(models);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contains"></param>
+        /// /// <returns></returns>
+        [HttpGet("flightsNumber/{contains}")]
+        public async Task<ActionResult<ICollection<string>>> FlightsNumber(string contains)
+        {
+            ICollection<string> numbers = await repository.FindFlightsNum(contains);
+
+            return Ok(numbers);
+        }
+
 
     }
 }
