@@ -1,4 +1,5 @@
 
+using System.Linq;
 using flights.models;
 
 namespace flights.Filter
@@ -53,7 +54,18 @@ namespace flights.Filter
                         ? q
                         : q.Where(x => x.ScheduledArrival >= scheduledArriveMax);
 
+        /// <summary>
+        /// филтрация по номеру рейса
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static IQueryable<Flight> Number(this IQueryable<Flight> q, string? number)
+            => (number is null)
+                ? q
+                : q.Where(x => x.FlightNo == number);
 
     }
+
 }
 

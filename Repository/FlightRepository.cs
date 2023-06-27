@@ -38,10 +38,7 @@ namespace Repository
                 .Status(filter.Status)
                 .ArriveMin(filter.ScheduledArriveMin)
                 .ArriveMax(filter.ScheduledArriveMax)
-                // .Where(x => x.ScheduledArrival >= filter.ScheduledArriveMin &&
-                //         x.ScheduledArrival <= filter.ScheduledArriveMax &&
-                //         x.ArrivalAirport == filter.Arrival &&
-                //         x.Status == filter.Status)
+                .Number(filter.Number)
                 .Skip(filter.Pagination.OnPage * (filter.Pagination.Page - 1))
                 .Take(filter.Pagination.OnPage)
                 .ToListAsync();
@@ -52,6 +49,7 @@ namespace Repository
                 .Status(filter.Status)
                 .ArriveMin(filter.ScheduledArriveMin)
                 .ArriveMax(filter.ScheduledArriveMax)
+                .Number(filter.Number)
                 .CountAsync();
 
             return (flights, filter);
