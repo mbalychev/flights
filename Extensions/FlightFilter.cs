@@ -1,6 +1,8 @@
 
+using System.Reflection.Metadata.Ecma335;
 using System.Linq;
 using flights.models;
+using flights.ViewModels;
 
 namespace flights.Filter
 {
@@ -64,6 +66,34 @@ namespace flights.Filter
             => (number is null)
                 ? q
                 : q.Where(x => x.FlightNo == number);
+
+        /// <summary>
+        /// сортировка по полю
+        /// </summary>
+        /// <param name="q"></param>
+        /// <param name="sort">тип сортировки SortType</param>
+        /// <returns></returns>
+        public static IQueryable<Flight> Sort(this IQueryable<Flight> q, SortType? sort)
+        {
+            if (sort is null)
+                return q;
+
+
+            switch (sort)
+            {
+                case SortType.status:
+                    return q.OrderBy(x => x.Status);
+
+                case SortType.arrivalTime:
+                    return q.OrderBy(x => x.ScheduledArrival);
+
+                case SortType.departureTime:
+                    return q.OrderBy(x => x.ActualDeparture);
+
+                default:
+                    return q;
+            }
+        }
 
     }
 

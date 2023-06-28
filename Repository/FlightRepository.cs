@@ -39,6 +39,7 @@ namespace Repository
                 .ArriveMin(filter.ScheduledArriveMin)
                 .ArriveMax(filter.ScheduledArriveMax)
                 .Number(filter.Number)
+                .Sort(filter.Sort)
                 .Skip(filter.Pagination.OnPage * (filter.Pagination.Page - 1))
                 .Take(filter.Pagination.OnPage)
                 .ToListAsync();

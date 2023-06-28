@@ -52,13 +52,13 @@ namespace flights.ViewModels
         /// статус рейса
         /// </summary>
         /// <value></value>
-        public string? Status { get; set; } = string.Empty;
+        public string? Status { get; set; }
 
         /// <summary>
         /// номер рейса
         /// </summary>
         /// <value></value>
-        public string? Number { get; set; } = string.Empty;
+        public string? Number { get; set; }
         /// <summary>
         /// мин время прибытия
         /// </summary>
@@ -69,5 +69,24 @@ namespace flights.ViewModels
         /// </summary>
         /// <value></value>
         public DateTime? ScheduledArriveMax { get; set; }
+
+        /// <summary>
+        /// сортировка по полю
+        /// </summary>
+        /// <value></value>
+        public SortType? Sort { get; set; }
+    }
+
+    /// <summary>
+    /// тип сортировки
+    /// </summary>
+    public enum SortType
+    {
+        ///статус маршрута
+        status,
+        ///время прилета
+        arrivalTime,
+        ///время вылета
+        departureTime
     }
 }
