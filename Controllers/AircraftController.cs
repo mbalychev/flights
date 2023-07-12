@@ -1,13 +1,8 @@
-using System.ComponentModel.Design;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using flights.ViewModels;
 using flights.models;
 using flights.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using flights.ViewModels;
 using Repository;
 //using flights.Models;
 
@@ -47,13 +42,14 @@ namespace flights.Controllers
         /// <param name="filter">фильтр (дальность полета) + пагинация</param>
         /// <returns></returns>
         [HttpPost("")]
-        public async Task<ActionResult<AircrafstView>> GetTModels(AircraftFilter filter)
+        public async Task<ActionResult<AircraftsView>> GetTModels(AircraftFilter filter)
         {
             if (!filter.Pagination.CheckPagination())
                 return BadRequest(PaginationsExtensions.BadPaginationMessage());
 
             AircraftsView aircrafts = await repository.GetAircrafts(filter);
 
+            //TODO: не реализовано
             // if (filter.Pagination is null)
             //     filter.Pagination = new Pagination();
 
@@ -83,7 +79,7 @@ namespace flights.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Aircraft>> GetTModelById(int id)
         {
-            Aircraft? aircraft = await _context.Aircrafts.FindAsync(id);
+            Aircraft? aircraft = await context.Aircrafts.FindAsync(id);
 
             if (aircraft is null)
                 return NotFound(new ErrorView("не найдено", id.ToString()));
