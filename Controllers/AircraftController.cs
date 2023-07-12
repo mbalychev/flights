@@ -8,6 +8,7 @@ using flights.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using flights.ViewModels;
+using Repository;
 //using flights.Models;
 
 namespace flights.Controllers
@@ -22,47 +23,56 @@ namespace flights.Controllers
         /// <summary>
         ///  demo context
         /// </summary>
-        public DemoContext _context;
+        public DemoContext context;
+
         /// <summary>
-        /// инициализация 
+        /// репозиторий возд судов
         /// </summary>
-        public AircraftController(DemoContext context)
+        public AircraftRepository repository;
+
+        /// <summary>
+        /// инициализация
+        /// </summary>
+        /// <param name="context">сервис конт БД</param>
+        /// <param name="repository">сервис репозитория возд судов</param>
+        public AircraftController(DemoContext context, AircraftRepository repository)
         {
-            _context = context;
+            this.context = context;
+            this.repository = repository;
         }
 
         /// <summary>
         /// список воздушных судов
         /// </summary>
-        /// <param name="pagination">пагинация</param>
-        /// <param name="minRange">мин радиус полета</param>
-        /// <param name="maxRange">макс радиус полета</param>
+        /// <param name="filter">фильтр (дальность полета) + пагинация</param>
         /// <returns></returns>
         [HttpPost("")]
-        public async Task<ActionResult<IEnumerable<Aircraft>>> GetTModels(Pagination? pagination, int? minRange, int? maxRange)
+        public async Task<ActionResult<AircrafstView>> GetTModels(AircraftFilter filter)
         {
-            if (!pagination.CheckPagination())
+            if (!filter.Pagination.CheckPagination())
                 return BadRequest(PaginationsExtensions.BadPaginationMessage());
 
-            if (pagination is null)
-                pagination = new Pagination();
+            AircraftsView aircrafts = await repository.GetAircrafts(filter);
+
+            // if (filter.Pagination is null)
+            //     filter.Pagination = new Pagination();
 
             //если значения пустые - ставим по умолчнию
-            minRange = (minRange is null) ? 0 : minRange;
-            maxRange = (maxRange is null) ? await _context.Aircrafts.Select(x => x.Range).MaxAsync() : maxRange;
+            // minRange = (minRange is null) ? 0 : minRange;
+            // maxRange = (maxRange is null) ? await _context.Aircrafts.Select(x => x.Range).MaxAsync() : maxRange;
 
-            ICollection<Aircraft> aircrafts = await _context.Aircrafts
-            .OrderBy(x => x.AircraftCode)
-            .Where(x => x.Range >= minRange && x.Range <= maxRange)
-            .Skip(pagination.OnPage * (pagination.Page - 1))
-            .Take(pagination.OnPage)
-            .ToListAsync();
+            // ICollection<Aircraft> aircrafts = await _context.Aircrafts
+            // .OrderBy(x => x.AircraftCode)
+            // .Where(x => x.Range >= minRange && x.Range <= maxRange)
+            // .Skip(filter.Pagination.OnPage * (pagination.Page - 1))
+            // .Take(pagination.OnPage)
+            // .ToListAsync();
 
-            pagination.Total = aircrafts.Count();
+            // pagination.Total = aircrafts.Count();
 
-            AircraftView model = new AircraftView(aircrafts, pagination);
+            // AircraftView model = new AircraftView(aircrafts, pagination);
 
-            return Ok(model);
+            return Ok(aircrafts);
         }
 
         /// <summary>

@@ -70,5 +70,18 @@ namespace flights.Controllers
         }
 
 
+        /// <summary>
+        /// список возд судов
+        /// </summary>
+        /// <param name="pagination">пагинация</param>
+        /// <returns></returns>
+        [HttpPost("aitcrafts")]
+        public async Task<ActionResult<ICollection<Aircraft>>> GetAircrafts(Pagination pagination)
+        {
+            ICollection<Aircraft> aircrafts = await repository.AllAircrafts(pagination);
+
+            return Ok(aircrafts);
+        }
+
     }
 }

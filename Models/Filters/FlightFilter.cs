@@ -1,4 +1,4 @@
-namespace flights.ViewModels
+namespace flights.models
 {
     /// <summary>
     /// фильтр для поиска моделей упралвения полетами

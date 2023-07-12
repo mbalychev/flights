@@ -8,6 +8,9 @@ public class Pagination
     /// </summary>
     public Pagination()
     {
+        Page = 1;
+        OnPage = 10;
+        Total = 0;
     }
 
     /// <summary>

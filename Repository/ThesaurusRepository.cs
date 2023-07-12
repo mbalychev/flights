@@ -66,5 +66,15 @@ namespace Repository
             return numbers;
         }
 
+        /// <summary>
+        /// список возд судов
+        /// </summary>
+        /// <param name="pagination"></param>
+        /// <returns></returns>
+        public async Task<ICollection<Aircraft>> AllAircrafts(Pagination pagination) =>
+            await context.Aircrafts
+            .Skip(pagination.OnPage * --pagination.Page)
+            .Take(pagination.OnPage)
+            .ToListAsync();
     }
 }
