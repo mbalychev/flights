@@ -15,6 +15,7 @@ services.AddDbContext<DemoContext>(opt => opt.UseNpgsql(connection));
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddTransient<FlightRepository>();
+services.AddTransient<AircraftRepository>();
 services.AddTransient<ThesaurusRepository>();
 
 services.AddSwaggerGen(opt =>
